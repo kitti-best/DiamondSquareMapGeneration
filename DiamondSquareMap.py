@@ -1,13 +1,15 @@
+import math
 import random
 import Color
 from Setting import *
 
 
 class DiamondSquareMap:
-    def __init__(self, w=5, h=5, min_corner_str=-5, max_corner_str=5, min_random_str=-2, max_random_str=2):
+    def __init__(self, pos = (0, 0), w=5, h=5, min_corner_str=-5, max_corner_str=5, min_random_str=-2, max_random_str=2):
+        self.pos = pos
         self.w = w
         self.h = h
-        self.cell_w = SCREENH // w
+        self.cell_w = round(SCREENH / h)
         self.corner_strength = (min_corner_str, max_corner_str)
         self.random_strength = (min_random_str, max_random_str)
         self.__map_list = self.__create_blank_map()
@@ -70,7 +72,7 @@ class DiamondSquareMap:
                 avg_x = (x1 + x2 + x3 + x4) // 4
                 avg_y = (y1 + y2 + y3 + y4) // 4
 
-                random_factor = (random.randint(min_range, max_range)) * step
+                random_factor = (random.randint(min_range, max_range)) * step / 4
                 self.__map_list[avg_y][avg_x] = (v1 + v2 + v3 + v4) / 4 + random_factor
 
     def __perform_corner(self):
@@ -84,14 +86,15 @@ class DiamondSquareMap:
         self.__map_list[self.h - 1][0] = bl
         self.__map_list[self.h - 1][self.w - 1] = br
         mid_x, mid_y = self.w // 2, self.h // 2
-        self.__map_list[mid_y][mid_x] = (tl + tr + bl + br) / 4
+        random_factor = (random.randint(min_range, max_range))
+        self.__map_list[mid_y][mid_x] = (tl + tr + bl + br) / 4 + random_factor
 
     def __cache_map(self):
         size = (self.w * self.cell_w, self.h * self.cell_w)
         map_img = pygame.Surface(size)
         height_range = (self.__max_h - self.__min_h)
         biome_range = [-0.1, -0.05, 0.0, 0.5]
-        print(self.__min_h, self.__max_h)
+        # print(self.__min_h, self.__max_h)
 
         for y, row in enumerate(self.__map_list):
             for x, height in enumerate(row):
@@ -105,12 +108,12 @@ class DiamondSquareMap:
                     color = Color.HEAVENLYGREEN
                 else:
                     color = Color.SLATEGRAY
-                pygame.draw.rect(map_img, color, rect=(x * self.cell_w, y * self.cell_w, self.cell_w, self.cell_w))
+                pygame.draw.rect(map_img, color, rect=(x * int(self.cell_w), y * int(self.cell_w), int(self.cell_w), int(self.cell_w)))
 
         return map_img
 
     def draw(self):
-        SCREEN.blit(self.map, (0, 0))
+        SCREEN.blit(self.map, self.pos)
 
     def regenerate(self):
-        self.__init__(self.w, self.h, *self.corner_strength, *self.random_strength)
+        self.__init__(self.pos, self.w, self.h, *self.corner_strength, *self.random_strength)
