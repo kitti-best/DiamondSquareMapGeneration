@@ -3,10 +3,12 @@ from DiamondSquareMap import DiamondSquareMap
 
 
 class App:
-    def __init__(self, procedural_map: DiamondSquareMap):
+    def __init__(self):
         self.nextState = 0
-        self.map = procedural_map
-        # self.map = Map(129, 129)
+        self.maps = []
+        procedural_map1 = DiamondSquareMap((0, 0), MAPW, MAPH, -15, 15, -2, 2, (SCREENW, SCREENW))
+        # procedural_map2 = DiamondSquareMap((SCREENH - 1, 0), MAPW, MAPH, -15, 15, -2, 2, (SCREENH, SCREENH))
+        self.maps += [procedural_map1]
 
     def __eq__(self, other):
         if other.lower() == "menu":
@@ -17,7 +19,9 @@ class App:
     def update(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
-                self.map.regenerate()
+                for p_map in self.maps:
+                    p_map.regenerate()
 
     def run(self):
-        self.map.draw()
+        for p_map in self.maps:
+            p_map.draw()

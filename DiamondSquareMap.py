@@ -5,11 +5,15 @@ from Setting import *
 
 
 class DiamondSquareMap:
-    def __init__(self, pos = (0, 0), w=5, h=5, min_corner_str=-5, max_corner_str=5, min_random_str=-2, max_random_str=2):
+    def __init__(self, pos = (0, 0), w=5, h=5, min_corner_str=-5, max_corner_str=5, min_random_str=-2, max_random_str=2, map_full_size = None):
         self.pos = pos
         self.w = w
         self.h = h
-        self.cell_w = round(SCREENH / h)
+        self.full_size = map_full_size
+        if not map_full_size:
+            self.full_size = (self.w, self.h)
+        print(self.full_size)
+        self.cell_w = round(self.full_size[0] / self.w)
         self.corner_strength = (min_corner_str, max_corner_str)
         self.random_strength = (min_random_str, max_random_str)
         self.__map_list = self.__create_blank_map()
@@ -90,8 +94,7 @@ class DiamondSquareMap:
         self.__map_list[mid_y][mid_x] = (tl + tr + bl + br) / 4 + random_factor
 
     def __cache_map(self):
-        size = (self.w * self.cell_w, self.h * self.cell_w)
-        map_img = pygame.Surface(size)
+        map_img = pygame.Surface(self.full_size)
         height_range = (self.__max_h - self.__min_h)
         biome_range = [-0.1, -0.05, 0.0, 0.5]
         # print(self.__min_h, self.__max_h)
@@ -116,4 +119,4 @@ class DiamondSquareMap:
         SCREEN.blit(self.map, self.pos)
 
     def regenerate(self):
-        self.__init__(self.pos, self.w, self.h, *self.corner_strength, *self.random_strength)
+        self.__init__(self.pos, self.w, self.h, *self.corner_strength, *self.random_strength, self.full_size)
