@@ -50,7 +50,7 @@ class DiamondSquareMap:
                 v3 = self.__map_list[y3][x3]
                 v4 = self.__map_list[y4][x4]
 
-                random_factor =  + (random.randint(min_range, max_range)) * step
+                random_factor = (random.randint(min_range, max_range)) * step
                 self.__map_list[y][x] = (v1 + v2 + v3 + v4) / 4 + random_factor
 
     def __perform_square(self, step):
