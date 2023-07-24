@@ -12,7 +12,6 @@ class DiamondSquareMap:
         self.full_size = map_full_size
         if not map_full_size:
             self.full_size = (self.w, self.h)
-        print(self.full_size)
         self.cell_w = round(self.full_size[0] / self.w)
         self.corner_strength = (min_corner_str, max_corner_str)
         self.random_strength = (min_random_str, max_random_str)

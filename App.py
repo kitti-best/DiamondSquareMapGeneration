@@ -6,7 +6,7 @@ class App:
     def __init__(self):
         self.nextState = 0
         self.maps = []
-        procedural_map1 = DiamondSquareMap((0, 0), MAPW, MAPH, -15, 15, -2, 2, (SCREENW, SCREENW))
+        procedural_map1 = DiamondSquareMap((0, 0), MAPW, MAPH, -15, 15, -2, 2, (SCREENW, SCREENH))
         # procedural_map2 = DiamondSquareMap((SCREENH - 1, 0), MAPW, MAPH, -15, 15, -2, 2, (SCREENH, SCREENH))
         self.maps += [procedural_map1]
 
