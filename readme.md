@@ -1,9 +1,9 @@
 # A map generator using diamond-square algorithm.
 
-![image](https://github.com/Eczemuth/DiamondSquareMapGeneration/assets/61462393/9b0a4d20-7696-4992-977f-fd0d435ff9a6)
+![img.png](img.png)
 map with size of 129 * 129
 
-![image](https://github.com/Eczemuth/DiamondSquareMapGeneration/assets/61462393/51b29bce-f755-4dba-9a34-68694157aee8)
+![img_1.png](img_1.png)
 map with size of 1025 * 513
 
 Capability and more nice to have feature.
